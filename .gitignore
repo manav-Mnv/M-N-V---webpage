@@ -1,0 +1,14 @@
+# Ignore large binary files
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Ignore logs and temp files
+*.log
+tmp/
+temp/
+
+# Ignore OS files
+.DS_Store
+Thumbs.db

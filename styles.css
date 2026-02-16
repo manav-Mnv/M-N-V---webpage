@@ -1164,3 +1164,344 @@ footer {
         font-size: 2.5rem;
     }
 }
+
+/* ============================
+   Checkout Page Styles
+   ============================ */
+
+.checkout-section {
+    padding: 2rem 0;
+    min-height: 60vh;
+}
+
+.checkout-container {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: flex;
+    gap: 40px;
+}
+
+.checkout-main {
+    flex: 1;
+    min-width: 0;
+}
+
+.checkout-sidebar {
+    width: 380px;
+    background: transparent;
+    border: none;
+    padding: 25px;
+    align-self: flex-start;
+}
+
+.checkout-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.checkout-header h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #000;
+}
+
+/* Form Groups */
+.checkout-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.checkout-form-group h3 {
+    margin-top: 0;
+    margin-bottom: 1.5rem;
+    font-family: var(--font-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.checkout-form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: #333;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.checkout-form-group input[type='text'],
+.checkout-form-group input[type='email'],
+.checkout-form-group input[type='tel'],
+.checkout-form-group select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 0;
+    font-family: var(--font-primary);
+    font-size: 1rem;
+    background: #fff;
+    transition: border 0.2s;
+    outline: none;
+}
+
+.checkout-form-group input:focus,
+.checkout-form-group select:focus {
+    border-color: #000;
+}
+
+.checkout-row {
+    display: flex;
+    gap: 20px;
+}
+
+.checkout-row>div {
+    flex: 1;
+}
+
+/* Radio Options */
+.radio-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    font-family: var(--font-serif);
+    font-size: 1rem;
+}
+
+.radio-option input[type='radio'] {
+    accent-color: #000;
+    width: 18px;
+    height: 18px;
+}
+
+/* Promo Code */
+.promo-code {
+    display: flex;
+    margin: 2rem 0;
+}
+
+.promo-code input {
+    flex: 1;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-right: none;
+    border-radius: 0;
+    outline: none;
+}
+
+.promo-code button {
+    padding: 12px 25px;
+    background: #555;
+    color: #fff;
+    border: none;
+    text-transform: uppercase;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.promo-code button:hover {
+    background: #333;
+}
+
+/* Summary Items */
+.summary-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 1.5rem;
+}
+
+.summary-item img {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    border: none;
+    mix-blend-mode: multiply;
+}
+
+.summary-details h4 {
+    font-family: var(--font-primary);
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 0.3rem;
+    text-transform: uppercase;
+}
+
+.summary-details p {
+    font-family: var(--font-serif);
+    font-size: 0.9rem;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* Totals */
+.summary-totals {
+    margin-top: 1rem;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.8rem;
+    font-family: var(--font-primary);
+    font-size: 0.95rem;
+    color: #444;
+}
+
+.summary-total-row {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 2px solid #000;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: #000;
+}
+
+/* Buttons */
+.btn-process {
+    display: block;
+    width: 100%;
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 18px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    border: none;
+    cursor: pointer;
+    margin-top: 2rem;
+    transition: background 0.3s;
+}
+
+.btn-process:hover {
+    background: #333;
+}
+
+.paypal-note {
+    background: #f9f9f9;
+    padding: 15px;
+    font-size: 0.9rem;
+    text-align: center;
+    margin-top: 1rem;
+    color: #666;
+    border: 1px solid #eee;
+}
+
+.secure-badges {
+    text-align: center;
+    margin-top: 2rem;
+    color: #777;
+    font-size: 0.8rem;
+}
+
+.payment-icons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+
+
+.required-field {
+    color: #d93025;
+}
+
+/* Responsive Checkout */
+@media (max-width: 900px) {
+    .checkout-container {
+        flex-direction: column;
+    }
+
+    .checkout-sidebar {
+        width: 100%;
+        order: -1;
+        /* Show summary first on mobile */
+        margin-bottom: 2rem;
+    }
+}
+
+/* ============================
+   Payment Method Styles
+   ============================ */
+
+.payment-method {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    border: 1px solid #eee;
+    background: #fdfdfd;
+}
+
+.payment-method h3 {
+    font-family: var(--font-primary);
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #000;
+}
+
+.payment-method label {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 1rem;
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    cursor: pointer;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.payment-method label:hover {
+    color: #000;
+}
+
+.payment-method input[type="radio"] {
+    accent-color: #000;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+}
+
+/* ============================
+   Grand Total Styles
+   ============================ */
+
+.grand-total {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid #000;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.grand-total h2 {
+    margin: 0;
+    font-family: var(--font-primary);
+    font-size: 1.4rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #000;
+    letter-spacing: 0.05em;
+}
+
+#grandTotal {
+    font-size: 1.6rem;
+}
+}

@@ -1,14 +1,29 @@
-# Ignore large binary files
-*.exe
-*.dll
-*.so
-*.dylib
+# ── Secrets & Environment ──────────────────────────────
+.env
+*.env
+.env.local
+.env.production
 
-# Ignore logs and temp files
+# ── Node.js ────────────────────────────────────────────
+node_modules/
+package-lock.json
+npm-debug.log*
+
+# ── PDF / eBook files ──────────────────────────────────
+*.pdf
+book-backend/assets/
+
+# ── OS files ───────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── Logs & temp ────────────────────────────────────────
 *.log
 tmp/
 temp/
 
-# Ignore OS files
-.DS_Store
-Thumbs.db
+# ── Binary files ───────────────────────────────────────
+*.exe
+*.dll
+*.so
+*.dylib

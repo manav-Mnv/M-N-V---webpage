@@ -16,3 +16,8 @@ temp/
 # ── Secrets ────────────────────────────────────────────
 .env
 *.env
+
+# PDF & QR files
+assets/book.pdf
+assets/images/upi-qr.png
+*.pdf

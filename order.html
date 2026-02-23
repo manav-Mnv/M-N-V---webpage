@@ -11,9 +11,50 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" type="image/svg+xml" href="favicon.svg">
     <style>
-        /* Fallback for SVG if needed */
         .social-icon svg {
-            display: code-block;
+            display: block;
+        }
+
+        /* ── Buy Now Button ─────────────────────────────── */
+        #buy-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            width: 100%;
+            padding: 1rem 1.5rem;
+            margin-top: 2rem;
+            background: linear-gradient(135deg, #4f6ef7 0%, #7c3aed 100%);
+            color: #fff;
+            font-family: var(--font-primary);
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.15s;
+        }
+
+        #buy-btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        #buy-btn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* ── Payment status message ─────────────────────── */
+        #pay-status {
+            margin-top: 1rem;
+            font-family: var(--font-primary);
+            font-size: 0.9rem;
+            color: #e74c3c;
+            min-height: 1.2rem;
+            text-align: center;
         }
     </style>
 </head>
@@ -43,15 +84,6 @@
                     <h2>CHECKOUT</h2>
                 </div>
 
-
-
-
-
-
-
-
-
-
                 <div class="promo-code">
                     <input type="text" placeholder="PROMO CODE">
                     <button>Apply</button>
@@ -63,27 +95,16 @@
 
                 <div class="payment-method">
                     <h3>Select Payment Method</h3>
-
-                    <label>
-                        <input type="radio" name="payment" value="upi" checked>
-                        UPI
-                    </label>
-
-                    <label>
-                        <input type="radio" name="payment" value="card">
-                        Debit / Credit Card
-                    </label>
-
-                    <label>
-                        <input type="radio" name="payment" value="netbanking">
-                        Net Banking
-                    </label>
+                    <label><input type="radio" name="payment" value="upi" checked> UPI</label>
+                    <label><input type="radio" name="payment" value="card"> Debit / Credit Card</label>
+                    <label><input type="radio" name="payment" value="netbanking"> Net Banking</label>
                 </div>
-                <form>
-                    <script src="https://checkout.razorpay.com/v1/payment-button.js"
-                        data-payment_button_id="pl_Hw89234nSdf" async>
-                        </script>
-                </form>
+
+                <!-- ── Razorpay Buy Button ──────────────────────────────── -->
+                <button id="buy-btn" onclick="startPayment()">
+                    🔒 &nbsp;Buy Now — ₹17.01
+                </button>
+                <p id="pay-status"></p>
 
             </div>
 
@@ -187,14 +208,91 @@
         </div>
     </footer>
 
+    <!-- Razorpay Checkout SDK -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
     <script>
-        let subtotal = 10.04;
-        let portalCharges = 6.97;
+        // ── Grand Total Calculation ──────────────────────────
+        const subtotal = 10.04;
+        const portalCharges = 6.97;
+        const grandTotal = subtotal + portalCharges;
+        document.getElementById("grandTotal").innerText = "₹" + grandTotal.toFixed(2);
 
-        let grandTotal = subtotal + portalCharges;
+        // ── Backend URL ──────────────────────────────────────
+        const BACKEND = "http://localhost:5000";
 
-        document.getElementById("grandTotal").innerText =
-            "₹" + grandTotal.toFixed(2);
+        // ── Start Payment ────────────────────────────────────
+        async function startPayment() {
+            const btn = document.getElementById("buy-btn");
+            const status = document.getElementById("pay-status");
+            btn.disabled = true;
+            btn.textContent = "⏳ Connecting…";
+            status.textContent = "";
+
+            try {
+                // 1️⃣ Create Razorpay order from backend
+                const res = await fetch(`${BACKEND}/create-order`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                });
+
+                if (!res.ok) throw new Error("Could not create order. Is the backend running?");
+                const order = await res.json();
+
+                // 2️⃣ Get selected payment method
+                const method = document.querySelector('input[name="payment"]:checked')?.value || "upi";
+
+                // 3️⃣ Open Razorpay Checkout popup
+                const rzp = new Razorpay({
+                    key: order.keyId,
+                    amount: order.amount,
+                    currency: order.currency,
+                    order_id: order.orderId,
+                    name: "Mnv Books",
+                    description: "Who Stayed — eBook",
+                    image: "assets/images/image (1).jpg",
+                    prefill: { method: method },
+                    theme: { color: "#4f6ef7" },
+                    modal: {
+                        ondismiss: function () {
+                            btn.disabled = false;
+                            btn.innerHTML = "🔒 &nbsp;Buy Now — ₹17.01";
+                            status.textContent = "Payment cancelled.";
+                        }
+                    },
+                    handler: async function (response) {
+                        // 4️⃣ Verify signature on backend
+                        btn.textContent = "✅ Verifying payment…";
+                        const verify = await fetch(`${BACKEND}/verify-payment`, {
+                            method: "POST",
+                            headers: { "Content-Type": "application/json" },
+                            body: JSON.stringify({
+                                razorpay_order_id: response.razorpay_order_id,
+                                razorpay_payment_id: response.razorpay_payment_id,
+                                razorpay_signature: response.razorpay_signature,
+                            }),
+                        });
+
+                        const result = await verify.json();
+                        if (!verify.ok || !result.success) {
+                            status.textContent = "⚠️ Verification failed. Please contact support.";
+                            btn.disabled = false;
+                            btn.innerHTML = "🔒 &nbsp;Buy Now — ₹17.01";
+                            return;
+                        }
+
+                        // 5️⃣ Redirect to success page with download token
+                        window.location.href = `success.html?token=${result.token}`;
+                    },
+                });
+
+                rzp.open();
+
+            } catch (err) {
+                status.textContent = "❌ " + err.message;
+                btn.disabled = false;
+                btn.innerHTML = "🔒 &nbsp;Buy Now — ₹17.01";
+            }
+        }
     </script>
 </body>
 

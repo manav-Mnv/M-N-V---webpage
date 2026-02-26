@@ -17,7 +17,11 @@ temp/
 .env
 *.env
 
-# PDF & QR files
+# ── PDF & QR files ─────────────────────────────────────
 assets/book.pdf
 assets/images/upi-qr.png
 *.pdf
+
+# ── Private / secret pages — never push these ──────────
+download-9283.html
+private-files/

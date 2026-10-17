@@ -1,5 +1,7 @@
 # Mnv - Personal Portfolio
 
+![Status](https://img.shields.io/badge/status-production-2ea44f?style=flat-square) [![Live site](https://img.shields.io/badge/live-mnvv.netlify.app-000000?style=flat-square)](https://mnvv.netlify.app)
+
 Welcome to the personal portfolio website of **Manav**. This repository hosts the source code for my personal website, showcasing my work, books, and thoughts.
 
 ## 🚀 About
